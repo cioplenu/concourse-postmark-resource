@@ -5,17 +5,19 @@ set -e
 exec 3>&1 # make stdout available as fd 3 for the result
 exec 1>&2 # redirect all output to stderr for logging
 
-destination=$1
+base_path=$1
+payload=$(cat)
+template_folder=$(echo "$payload" | jq -r '.params.path')
 
-POSTMARK_SERVER_TOKEN=$(cat | jq -r '.source.server_token')
+POSTMARK_SERVER_TOKEN=$(echo "$payload" | jq -r '.source.server_token')
 export POSTMARK_SERVER_TOKEN
 
-if [ -z "$destination" ]; then
+if [ -z "$base_path" ]; then
   echo "usage: $0 <path/to/destination>" >&2
   exit 1
 fi
 
-postmark templates push -f "$1"
+postmark templates push -f "$base_path/$template_folder"
 
 echo "{ \"version\": \"latest\", \"metadata\": [{ \"timestamp\": \"$(date)\" }] }" >&3
 
