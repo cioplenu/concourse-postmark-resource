@@ -17,5 +17,5 @@ fi
 
 postmark templates pull -o "$1"
 
-echo "{ \"version\": { \"ref\": \"latest\" }, \"metadata\": [{ \"timestamp\": \"$(date)\" }] }" >&3
+echo "{ \"version\": { \"ref\": \"latest\" } }" >&3
 
