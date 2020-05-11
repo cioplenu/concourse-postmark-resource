@@ -19,5 +19,5 @@ fi
 
 postmark templates push -f "$base_path/$template_folder"
 
-echo "{ \"version\": \"latest\", \"metadata\": [{ \"timestamp\": \"$(date)\" }] }" >&3
+echo "{ \"version\": { \"ref\" :\"latest\" }, \"metadata\": [{ \"timestamp\": \"$(date)\" }] }" >&3
 
